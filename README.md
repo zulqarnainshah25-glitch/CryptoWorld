@@ -4,7 +4,6 @@ Pakistan ka pehla AI-powered crypto signal app!
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Android-green)
-![License](https://img.shields.io/badge/license-MIT-orange)
 
 ---
 
@@ -12,11 +11,11 @@ Pakistan ka pehla AI-powered crypto signal app!
 
 CryptoWorld ek **AI-powered crypto trading signal app** hai jo:
 
-- 🤖 **Groq AI** aur **Google Gemini** se real-time market analysis karti hai
-- 📊 **Binance Futures** se live data leti hai
-- 🎯 **LONG/SHORT signals** deti hai with Entry, Stop Loss, Take Profit
-- 📈 **Multi-timeframe analysis** karti hai (15m, 1h, 4h)
-- 📉 **Signal accuracy** track karti hai
+- 🤖 Groq AI aur Google Gemini se real-time market analysis karti hai
+- 📊 Binance Futures se live data leti hai
+- 🎯 LONG/SHORT signals deti hai with Entry, Stop Loss, Take Profit
+- 📈 Multi-timeframe analysis karti hai (15m, 1h, 4h)
+- 📉 Signal accuracy track karti hai
 
 ---
 
@@ -24,44 +23,44 @@ CryptoWorld ek **AI-powered crypto trading signal app** hai jo:
 
 ### Step 1: APK Download Karein
 
-Neeche **"Releases"** section mein jayein ya **direct download** karein:
+Neeche **"Releases"** section mein jayein:
 
-- 📦 [Download APK](https://github.com/YOUR_USERNAME/cryptoworld-app/releases/latest)
+- 📦 [Download APK](https://github.com/zulqarnainshah25-glitch/CryptoWorld/releases/latest)
 
 ### ⚠️ AGAR FILE `.bin` FORMAT MEIN AAYE
 
-Kabhi kabhi browsers (khaas taur par Chrome) file ko `.bin` extension ke saath save kar dete hain. **Yeh normal hai.**
+Kabhi kabhi browsers file ko `.bin` extension ke saath save kar dete hain. **Yeh normal hai.**
 
-**Zaroori:** File ka naam **`.bin` se `.zip` mein badalna LAZMI hai.**
+**Zaroori:** File ka naam `.bin` se `.zip` mein badalna LAZMI hai.
 
 **Kaise karein:**
 
 1. File Manager kholo
-2. `CryptoWorld-v1.0.0.bin` par **long press** karein
-3. **"Rename"** select karein
+2. File par long press karein
+3. "Rename" select karein
 4. `.bin` hata ke `.zip` kar dein
 5. Save karein
 
 ### Step 2: ZIP Extract Karein
 
-Phone par:
+**Phone par:**
 
-1. **ZArchiver** ya file manager app kholo
+1. ZArchiver ya file manager app kholo
 2. ZIP file par tap karein
-3. **"Extract Here"** select karein
+3. "Extract Here" select karein
 
-Computer par:
+**Computer par:**
 
-1. ZIP file par **right-click**
-2. **"Extract All"** select karein
+1. ZIP file par right-click
+2. "Extract All" select karein
 
 ### Step 3: APK Install Karein
 
 1. Extracted folder kholo
 2. `app.apk` par tap karein
 3. Agar "Unknown Sources" block kare:
-   - **Settings** → **Apps** → **Special Access** → **Install Unknown Apps**
-   - **Chrome** ya **Files** ko **Allow** karein
+   - Settings → Apps → Special Access → Install Unknown Apps
+   - Chrome ya Files ko Allow karein
 4. Install karein
 5. App kholo!
 
@@ -84,12 +83,12 @@ Computer par:
 
 ## 🚀 How It Works
 
-1. **Register** karein (free account)
-2. **Login** karein
-3. **Coin select** karein (BTC, ETH, SOL, etc.)
-4. **Timeframe** choose karein (15m, 1h, 4h)
-5. **"Analyze Market"** dabayein
-6. **Signal hasil karein!** 🎯
+1. Register karein (free account)
+2. Login karein
+3. Coin select karein (BTC, ETH, SOL, etc.)
+4. Timeframe choose karein (15m, 1h, 4h)
+5. "Analyze Market" dabayein
+6. Signal hasil karein! 🎯
 
 ---
 
@@ -118,12 +117,6 @@ Computer par:
 
 ---
 
-## 📱 Screenshots
-
-_Coming soon..._
-
----
-
 ## 🔧 Troubleshooting
 
 ### "App not installed"
@@ -147,7 +140,7 @@ _Coming soon..._
 
 - **WhatsApp:** [+92 349 3730233](https://wa.me/923493730233)
 - **Email:** support@cryptoworld.pk
-- **GitHub:** [Issues](https://github.com/YOUR_USERNAME/cryptoworld-app/issues)
+- **GitHub:** [Issues](https://github.com/zulqarnainshah25-glitch/CryptoWorld/issues)
 
 ---
 
