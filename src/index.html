@@ -1,0 +1,1422 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="monetag" content="467ae6955608701cc9cdbfec1fa732c9" />
+    <script>
+      (function (s) {
+        s.dataset.zone = "12005354";
+        s.src = "https://n6wxm.com/vignette.min.js";
+      })(
+        [document.documentElement, document.body]
+          .filter(Boolean)
+          .pop()
+          .appendChild(document.createElement("script")),
+      );
+    </script>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#00d2ff" />
+
+    <!-- Apple iOS PWA -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="CryptoWorld" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+
+    <!-- Icon -->
+    <link rel="icon" type="image/png" href="/icon-192.png" />
+
+    <meta charset="UTF-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      name="viewport"
+    />
+    <meta
+      name="description"
+      content="CryptoWorld - AI-powered crypto signals app"
+    />
+
+    <title>CryptoWorld - AI Crypto Signals</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles/main.css" />
+
+    <!-- Lightweight Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
+    <!-- Monetag Vignette (auto-display) -->
+    <script>
+      (function (s) {
+        ((s.dataset.zone = "12005354"),
+          (s.src = "https://n6wxm.com/vignette.min.js"));
+      })(
+        [document.documentElement, document.body]
+          .filter(Boolean)
+          .pop()
+          .appendChild(document.createElement("script")),
+      );
+    </script>
+  </head>
+  <body>
+    <!-- ═══════════════ LOADING POPUP ═══════════════ -->
+    <div
+      id="loadingPopup"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0b0f19, #151a28);
+        z-index: 999999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      "
+    >
+      <div style="text-align: center; max-width: 300px; padding: 20px">
+        <div style="font-size: 48px; margin-bottom: 20px">📊</div>
+        <div
+          style="
+            color: #00d2ff;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+          "
+        >
+          CryptoWorld
+        </div>
+        <div style="color: #a0a0b5; font-size: 13px; margin-bottom: 30px">
+          App load ho raha hai...
+        </div>
+        <div
+          style="
+            width: 50px;
+            height: 50px;
+            border: 4px solid #232b3e;
+            border-top: 4px solid #00d2ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 25px;
+          "
+        ></div>
+        <div style="text-align: left; font-size: 12px; color: #a0a0b5">
+          <div id="loadStep1" style="margin-bottom: 8px; opacity: 0.4">
+            ⏳ Market data load ho raha hai...
+          </div>
+          <div id="loadStep2" style="margin-bottom: 8px; opacity: 0.4">
+            ⏳ Chart load ho raha hai..
+          </div>
+          <div id="loadStep3" style="margin-bottom: 8px; opacity: 0.4">
+            ⏳ Outcome check ho raha hai...
+          </div>
+          <div id="loadStep4" style="opacity: 0.4">
+            ⏳ App tayyar ho raha hai...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ LOGIN MODAL ═══════════════ -->
+    <div id="loginModal">
+      <div class="login-card">
+        <h3 style="color: #00d2ff; margin-bottom: 10px">
+          🔐 CryptoWorld Login
+        </h3>
+        <p style="color: #a0a0b5; font-size: 13px; margin-bottom: 15px">
+          App use karne ke liye Login ya Register karein.
+        </p>
+        <div
+          id="loginError"
+          style="
+            color: #ff4d4d;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: none;
+          "
+        ></div>
+
+        <input
+          type="text"
+          id="usernameInput"
+          class="login-input"
+          placeholder="Enter Username"
+          autocomplete="username"
+        />
+        <input
+          type="password"
+          id="passwordInput"
+          class="login-input"
+          placeholder="Enter Password"
+          autocomplete="current-password"
+        />
+        <input
+          type="text"
+          id="referralCodeInput"
+          class="login-input"
+          placeholder="Referral Code (optional)"
+          autocomplete="off"
+          style="text-transform: uppercase"
+        />
+
+        <div style="display: flex; gap: 10px; margin-top: 5px">
+          <button
+            id="loginBtnTrigger"
+            class="login-btn"
+            onclick="performAuth('login')"
+            style="flex: 1"
+          >
+            Login
+          </button>
+          <button
+            id="registerBtnTrigger"
+            class="login-btn"
+            onclick="performAuth('register')"
+            style="
+              flex: 1;
+              background: #232b3e;
+              color: #00d2ff;
+              border: 1px solid #00d2ff;
+            "
+          >
+            Register
+          </button>
+        </div>
+
+        <div
+          style="
+            margin-top: 15px;
+            font-size: 11px;
+            color: #888;
+            text-align: left;
+          "
+        >
+          * Naye users apni pasand ka Username aur Password likh kar
+          <b>Register</b> dabayen.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <div class="app-header">
+      <button class="menu-icon" onclick="toggleSidebar()">☰</button>
+      <div class="app-title">CryptoWorld App</div>
+      <div style="display: flex; align-items: center; gap: 12px">
+        <a
+          href="/pages/admin.html"
+          style="
+            color: #ffcc00;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 5px 8px;
+            border: 1px solid #ffcc00;
+            border-radius: 6px;
+            background: rgba(255, 204, 0, 0.08);
+          "
+          title="Admin Panel"
+        >
+          🔐
+        </a>
+        <div
+          id="logoutBtn"
+          style="
+            color: #ff4d4d;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: bold;
+            padding-right: 5px;
+          "
+          onclick="logoutUser()"
+        >
+          Logout
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ SIDEBAR ═══════════════ -->
+    <div
+      class="sidebar-overlay"
+      id="sidebarOverlay"
+      onclick="toggleSidebar()"
+    ></div>
+
+    <div class="sidebar" id="sidebar">
+      <div
+        class="sidebar-header"
+        style="
+          padding: 20px;
+          background: #0b0f19;
+          border-bottom: 1px solid #232b3e;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <h3 style="color: #00d2ff; font-size: 18px">Menu</h3>
+        <button
+          class="close-btn"
+          style="
+            font-size: 28px;
+            color: #ff4d4d;
+            background: none;
+            border: none;
+            cursor: pointer;
+          "
+          onclick="toggleSidebar()"
+        >
+          ×
+        </button>
+      </div>
+      <ul class="menu-links" style="list-style: none; padding: 15px 0">
+        <li>
+          <a
+            href="https://cryptoworldtest.blogspot.com/p/test-signal.html"
+            style="
+              display: block;
+              padding: 15px 20px;
+              color: #a0a0b5;
+              text-decoration: none;
+            "
+            onclick="toggleSidebar()"
+          >
+            🏠 Home / Signal Generator
+          </a>
+        </li>
+        <li>
+          <a
+            href="/pages/about.html"
+            style="
+              display: block;
+              padding: 15px 20px;
+              color: #a0a0b5;
+              text-decoration: none;
+            "
+            onclick="toggleSidebar()"
+            >ℹ️ About Us</a
+          >
+        </li>
+        <li>
+          <a
+            href="/pages/terms.html"
+            style="
+              display: block;
+              padding: 15px 20px;
+              color: #a0a0b5;
+              text-decoration: none;
+            "
+            onclick="toggleSidebar()"
+            >📜 Terms &amp; Conditions</a
+          >
+        </li>
+        <li>
+          <a
+            href="/pages/disclaimer.html"
+            style="
+              display: block;
+              padding: 15px 20px;
+              color: #a0a0b5;
+              text-decoration: none;
+            "
+            onclick="toggleSidebar()"
+            >⚠️ Disclaimer</a
+          >
+        </li>
+        <li>
+          <a
+            href="/pages/contact.html"
+            style="
+              display: block;
+              padding: 15px 20px;
+              color: #a0a0b5;
+              text-decoration: none;
+            "
+            onclick="toggleSidebar()"
+            >📞 Contact Support</a
+          >
+        </li>
+      </ul>
+      <div
+        class="sidebar-footer"
+        style="padding: 20px; text-align: center; font-size: 12px; color: #555"
+      >
+        v2.1 Mobile Edition
+      </div>
+    </div>
+
+    <!-- ═══════════════ WHATSAPP FAB ═══════════════ -->
+    <a
+      class="fab-whatsapp"
+      href="#"
+      onclick="
+        openWhatsApp();
+        return false;
+      "
+    >
+      <svg viewBox="0 0 24 24">
+        <path
+          clip-rule="evenodd"
+          d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.383-.058c.104-.13.439-.533.561-.715.122-.181.244-.15.405-.087.161.065 1.028.486 1.201.572.174.087.289.13.332.202.043.073.043.423-.101.827z"
+          fill-rule="evenodd"
+        ></path>
+      </svg>
+    </a>
+
+    <!-- ═══════════════ MAIN CONTAINER ═══════════════ -->
+    <div class="main-container">
+      <div class="crypto-dashboard">
+        <!-- USER PANEL -->
+        <div class="user-panel">
+          <p>Logged in as</p>
+          <span
+            id="userIdDisplay"
+            style="color: #00d2ff; font-size: 16px; font-weight: bold"
+            >--</span
+          >
+          <div
+            style="border-top: 1px dashed rgb(59, 59, 84); margin: 10px 0"
+          ></div>
+          <p>
+            Daily Quota Left:
+            <span class="highlight" id="quotaDisplay">--</span>
+          </p>
+          <div
+            style="border-top: 1px dashed rgb(59, 59, 84); margin: 10px 0"
+          ></div>
+          <p style="font-size: 12px">
+            Your Referral Code:
+            <span
+              id="myReferralCode"
+              style="
+                color: #ffcc00;
+                font-weight: bold;
+                font-size: 13px;
+                letter-spacing: 1px;
+              "
+              >--</span
+            >
+            <button
+              onclick="copyReferralCode()"
+              style="
+                background: rgba(0, 210, 255, 0.1);
+                border: 1px solid #00d2ff;
+                color: #00d2ff;
+                border-radius: 4px;
+                padding: 2px 6px;
+                font-size: 10px;
+                margin-left: 5px;
+                cursor: pointer;
+              "
+            >
+              Copy
+            </button>
+          </p>
+          <p style="font-size: 12px">
+            Referrals:
+            <span id="refCountDisplay" style="color: #00ff88; font-weight: bold"
+              >0</span
+            >
+            | Bonus Signals:
+            <span id="refBonusDisplay" style="color: #00ff88; font-weight: bold"
+              >0</span
+            >
+          </p>
+          <p style="font-size: 11px; color: #888">
+            <span id="premiumStatus">Free Plan</span>
+          </p>
+        </div>
+
+        <!-- SHARE CARD -->
+        <div
+          style="
+            background: rgba(255, 204, 0, 0.05);
+            border: 1px dashed #ffcc00;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+          "
+        >
+          <p
+            style="
+              color: #ffcc00;
+              font-size: 13px;
+              font-weight: bold;
+              text-align: center;
+              margin-bottom: 5px;
+            "
+          >
+            🎁 Share & Earn Signals
+          </p>
+          <p
+            style="
+              color: #a0a0b5;
+              font-size: 11px;
+              text-align: center;
+              margin-bottom: 12px;
+            "
+          >
+            Har share par <b style="color: #00ff88">+0.5 signal</b> • Max 2/day
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+            <button
+              onclick="shareAndClaim('whatsapp')"
+              style="
+                background: #25d366;
+                color: #fff;
+                border: none;
+                padding: 10px;
+                border-radius: 8px;
+                font-size: 12px;
+                font-weight: bold;
+                cursor: pointer;
+              "
+            >
+              📱 WhatsApp
+            </button>
+            <button
+              onclick="shareAndClaim('twitter')"
+              style="
+                background: #1da1f2;
+                color: #fff;
+                border: none;
+                padding: 10px;
+                border-radius: 8px;
+                font-size: 12px;
+                font-weight: bold;
+                cursor: pointer;
+              "
+            >
+              🐦 Twitter
+            </button>
+            <button
+              onclick="shareAndClaim('facebook')"
+              style="
+                background: #1877f2;
+                color: #fff;
+                border: none;
+                padding: 10px;
+                border-radius: 8px;
+                font-size: 12px;
+                font-weight: bold;
+                cursor: pointer;
+              "
+            >
+              📘 Facebook
+            </button>
+            <button
+              onclick="shareAndClaim('telegram')"
+              style="
+                background: #0088cc;
+                color: #fff;
+                border: none;
+                padding: 10px;
+                border-radius: 8px;
+                font-size: 12px;
+                font-weight: bold;
+                cursor: pointer;
+              "
+            >
+              ✈️ Telegram
+            </button>
+          </div>
+          <p
+            style="
+              color: #a0a0b5;
+              font-size: 11px;
+              text-align: center;
+              margin-top: 10px;
+            "
+          >
+            Aaj ke shares:
+            <span id="todayShareCount" style="color: #00ff88; font-weight: bold"
+              >0</span
+            >/2
+          </p>
+        </div>
+
+        <!-- SUGGESTIONS CARD -->
+        <div
+          style="
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px dashed #00d2ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+          "
+        >
+          <p
+            style="
+              color: #00d2ff;
+              font-size: 13px;
+              font-weight: bold;
+              text-align: center;
+              margin-bottom: 5px;
+            "
+          >
+            💡 Suggestions & Feedback
+          </p>
+          <p
+            style="
+              color: #a0a0b5;
+              font-size: 11px;
+              text-align: center;
+              margin-bottom: 12px;
+            "
+          >
+            Apni raye dein — hum behtar banane ki koshish karenge
+          </p>
+          <select
+            id="suggestionCategory"
+            style="
+              width: 100%;
+              padding: 10px;
+              background: #0b0f19;
+              border: 1px solid #3b3b54;
+              color: #fff;
+              border-radius: 8px;
+              font-size: 13px;
+              margin-bottom: 10px;
+              outline: none;
+            "
+          >
+            <option value="Feature">✨ Naya Feature</option>
+            <option value="Bug">🐛 Bug Report</option>
+            <option value="Improvement">📈 Improvement</option>
+            <option value="Other">💬 Other</option>
+          </select>
+          <textarea
+            id="suggestionText"
+            placeholder="Apni suggestion likhein (kam az kam 5 harf)..."
+            maxlength="500"
+            rows="4"
+            style="
+              width: 100%;
+              padding: 10px;
+              background: #0b0f19;
+              border: 1px solid #3b3b54;
+              color: #fff;
+              border-radius: 8px;
+              font-size: 13px;
+              margin-bottom: 10px;
+              outline: none;
+              resize: vertical;
+              font-family: inherit;
+            "
+          ></textarea>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+            "
+          >
+            <span style="color: #a0a0b5; font-size: 10px">
+              <span id="suggestionCharCount">0</span>/500
+            </span>
+            <button
+              id="submitSuggestionBtn"
+              onclick="submitSuggestion()"
+              style="
+                background: linear-gradient(90deg, #00d2ff, #007bff);
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 8px;
+                font-size: 12px;
+                font-weight: bold;
+                cursor: pointer;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+              "
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="control-group">
+          <select class="crypto-select" id="coinSelect">
+            <option value="BTCUSDT">BTC/USDT</option>
+            <option value="ETHUSDT">ETH/USDT</option>
+            <option value="SOLUSDT">SOL/USDT</option>
+            <option value="BNBUSDT">BNB/USDT</option>
+            <option value="XRPUSDT">XRP/USDT</option>
+            <option value="ADAUSDT">ADA/USDT</option>
+            <option value="DOGEUSDT">DOGE/USDT</option>
+            <option value="SUIUSDT">SUI/USDT</option>
+            <option value="AVAXUSDT">AVAX/USDT</option>
+            <option value="LINKUSDT">LINK/USDT</option>
+            <option value="TRXUSDT">TRX/USDT</option>
+            <option value="HYPEUSDT">HYPE/USDT</option>
+            <option value="LTCUSDT">LTC/USDT</option>
+            <option value="BCHUSDT">BCH/USDT</option>
+            <option value="DOTUSDT">DOT/USDT</option>
+            <option value="NEARUSDT">NEAR/USDT</option>
+            <option value="APTUSDT">APT/USDT</option>
+            <option value="UNIUSDT">UNI/USDT</option>
+            <option value="PEPEUSDT">PEPE/USDT</option>
+            <option value="WIFUSDT">WIF/USDT</option>
+          </select>
+
+          <select class="crypto-select" id="timeframeSelect">
+            <option value="15m">15 Minutes</option>
+            <option selected value="1h">1 Hour</option>
+            <option value="4h">4 Hours</option>
+          </select>
+
+          <button
+            class="crypto-btn"
+            id="generateBtn"
+            onclick="fetchAdvancedSignal()"
+          >
+            Analyze Market
+          </button>
+          <!-- Watch Ad Button — sirf quota khatam hone par dikhega -->
+          <button
+            id="watchAdBtn"
+            onclick="watchAdForSignal()"
+            style="
+              display: none;
+              width: 100%;
+              padding: 14px;
+              font-size: 14px;
+              font-weight: bold;
+              background: linear-gradient(135deg, #ffd700, #ffa500);
+              color: #000;
+              border: none;
+              border-radius: 10px;
+              cursor: pointer;
+              box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
+              text-transform: uppercase;
+              letter-spacing: 1px;
+              margin-top: 10px;
+            "
+          >
+            🎁 Watch Ad → Get +1 Signal
+          </button>
+          <!-- Watch Ad → Get Extra Signal Button (sirf quota khatam hone par) -->
+          <button
+            id="watchAdBtn"
+            onclick="watchAdForSignal()"
+            style="
+              display: none;
+              width: 100%;
+              padding: 14px;
+              font-size: 14px;
+              font-weight: bold;
+              background: linear-gradient(135deg, #ffd700, #ffa500);
+              color: #000;
+              border: none;
+              border-radius: 10px;
+              cursor: pointer;
+              box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
+              text-transform: uppercase;
+              letter-spacing: 1px;
+            "
+          >
+            🎁 Watch Ad → Get +1 Signal
+          </button>
+
+          <button
+            onclick="openPremiumModal()"
+            style="
+              width: 100%;
+              padding: 16px;
+              font-size: 15px;
+              font-weight: bold;
+              background: linear-gradient(
+                135deg,
+                #ffd700 0%,
+                #ffa500 50%,
+                #ff8c00 100%
+              );
+              color: #000;
+              border: none;
+              border-radius: 10px;
+              cursor: pointer;
+              box-shadow: 0 4px 20px rgba(255, 165, 0, 0.5);
+              text-transform: uppercase;
+              letter-spacing: 1.5px;
+              transition: all 0.3s;
+            "
+          >
+            ⭐ Get Premium ⭐
+          </button>
+        </div>
+
+        <!-- LIVE CHART -->
+        <div class="live-chart-section" id="liveChartSection">
+          <div
+            class="chart-mini-header"
+            onclick="toggleChartCollapse()"
+            style="cursor: pointer"
+          >
+            <span class="chart-title">📊 Live Chart</span>
+            <div style="display: flex; gap: 8px; align-items: center">
+              <button
+                class="fullscreen-mini-btn"
+                onclick="
+                  event.stopPropagation();
+                  toggleChartFullscreen();
+                "
+              >
+                ⛶
+              </button>
+              <span
+                id="chartCollapseArrow"
+                style="
+                  color: #00d2ff;
+                  font-size: 16px;
+                  transition: transform 0.3s;
+                  display: inline-block;
+                "
+                >▼</span
+              >
+            </div>
+          </div>
+
+          <div class="chart-price-row">
+            <div>
+              <div class="chart-label">Current Price</div>
+              <div class="chart-price-value" id="chartLivePrice">--</div>
+            </div>
+            <div style="text-align: right">
+              <div class="chart-label">24h Change</div>
+              <div class="chart-price-change" id="chartPriceChange">--</div>
+            </div>
+          </div>
+
+          <div class="chart-indicators">
+            <div class="chart-ind-box">
+              <div class="chart-label">RSI (14)</div>
+              <div class="chart-ind-value" id="chartRsi">--</div>
+            </div>
+            <div class="chart-ind-box">
+              <div class="chart-label">MACD</div>
+              <div class="chart-ind-value" id="chartMacd">--</div>
+            </div>
+          </div>
+
+          <div class="chart-wrap">
+            <div class="chart-loading-mini" id="chartLoadingMini">
+              Loading chart...
+            </div>
+            <div id="mainChartContainer"></div>
+            <div id="mainVolumeContainer"></div>
+          </div>
+
+          <div class="chart-info-mini" id="chartInfoMini">
+            Chart load ho raha hai...
+          </div>
+        </div>
+
+        <!-- ERROR -->
+        <div
+          class="warning-box error-detail"
+          id="errorBox"
+          style="border-color: #ff4d4d; color: #ff4d4d"
+        ></div>
+
+        <!-- LOADING -->
+        <div class="loader-container" id="loading">
+          <div class="spinner"></div>
+          <div class="dynamic-loading-text" id="loadingText">
+            System initialize ho raha hai...
+          </div>
+        </div>
+
+        <!-- RESULT -->
+        <div class="result-card" id="signalResult">
+          <div
+            style="
+              border-bottom: 1px solid rgb(35, 43, 62);
+              color: #a0a0b5;
+              display: flex;
+              font-size: 12px;
+              justify-content: space-between;
+              margin-bottom: 15px;
+              padding-bottom: 10px;
+            "
+          >
+            <span>
+              Generated:
+              <span class="time-badge" id="resGenTime"></span>
+            </span>
+            <span>
+              Valid Until:
+              <span
+                class="time-badge"
+                id="resValidTime"
+                style="color: #ffcc00"
+              ></span>
+            </span>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Signal Direction</span>
+            <span id="resDirection"></span>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Signal Decision</span>
+            <span id="resDecision" style="font-weight: bold"></span>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Current Futures Price</span>
+            <span class="result-val" id="resPrice"></span>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">RSI (14) &amp; MACD</span>
+            <span
+              id="resIndicators"
+              style="color: #a0a0b5; font-size: 13px; font-weight: bold"
+            ></span>
+          </div>
+
+          <div
+            class="result-row"
+            style="
+              background: rgba(0, 210, 255, 0.05);
+              border-radius: 5px;
+              padding: 12px 5px;
+            "
+          >
+            <span class="result-label">Suggested Entry</span>
+            <span
+              class="result-val"
+              id="resEntry"
+              style="color: #00d2ff"
+            ></span>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Stop Loss</span>
+            <span class="result-val" id="resSl" style="color: #ff4d4d"></span>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Take Profit</span>
+            <span class="result-val" id="resTp" style="color: #00ff88"></span>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Risk / Reward</span>
+            <span class="result-val" id="resRR"></span>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Confidence</span>
+            <span class="result-val" id="resConfidence"></span>
+          </div>
+
+          <div class="result-row" id="qualityRow" style="display: none">
+            <span class="result-label">Signal Quality</span>
+            <span
+              class="result-val"
+              id="resQuality"
+              style="font-weight: bold"
+            ></span>
+          </div>
+
+          <div class="result-row">
+            <span class="result-label">Processing Engine</span>
+            <span
+              class="result-val"
+              id="resModel"
+              style="color: #a0a0b5"
+            ></span>
+          </div>
+
+          <div class="warning-box" id="warningBox"></div>
+          <div class="reason-box" id="resReason"></div>
+          <div class="waitfor-box" id="waitForBox"></div>
+        </div>
+
+        <!-- TRADING WINDOW CHART -->
+        <div class="trading-window-card">
+          <div class="tw-header">🕒 Best Trading Hours (Top 8 Pairs)</div>
+          <div class="table-responsive">
+            <table class="tw-table">
+              <thead>
+                <tr>
+                  <th>Coin Pair</th>
+                  <th>Pakistan Time (PKT)</th>
+                  <th>India Time (IST)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="pair-col">BTC/USDT</td>
+                  <td class="time-col">5:00 PM - 9:00 PM</td>
+                  <td class="time-col">5:30 PM - 9:30 PM</td>
+                </tr>
+                <tr>
+                  <td class="pair-col">ETH/USDT</td>
+                  <td class="time-col">5:00 PM - 9:00 PM</td>
+                  <td class="time-col">5:30 PM - 9:30 PM</td>
+                </tr>
+                <tr>
+                  <td class="pair-col">SOL/USDT</td>
+                  <td class="time-col">5:00 PM - 10:00 PM</td>
+                  <td class="time-col">5:30 PM - 10:30 PM</td>
+                </tr>
+                <tr>
+                  <td class="pair-col">BNB/USDT</td>
+                  <td class="time-col">6:00 AM - 11:00 AM</td>
+                  <td class="time-col">6:30 AM - 11:30 AM</td>
+                </tr>
+                <tr>
+                  <td class="pair-col">XRP/USDT</td>
+                  <td class="time-col">6:00 AM - 11:00 AM</td>
+                  <td class="time-col">6:30 AM - 11:30 AM</td>
+                </tr>
+                <tr>
+                  <td class="pair-col">LINK/USDT</td>
+                  <td class="time-col">1:00 PM - 5:00 PM</td>
+                  <td class="time-col">1:30 PM - 5:30 PM</td>
+                </tr>
+                <tr>
+                  <td class="pair-col">ADA/USDT</td>
+                  <td class="time-col">1:00 PM - 5:00 PM</td>
+                  <td class="time-col">1:30 PM - 5:30 PM</td>
+                </tr>
+                <tr>
+                  <td class="pair-col">DOGE/USDT</td>
+                  <td class="time-col">6:00 PM - 11:00 PM</td>
+                  <td class="time-col">6:30 PM - 11:30 PM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            style="
+              font-size: 11.5px;
+              color: #a0a0b5;
+              margin-top: 12px;
+              text-align: center;
+              line-height: 1.5;
+            "
+          >
+            *Yeh timing New York, London aur Asian sessions ke overlap ke
+            mutabiq hain jahan volume sab se zyada hota hai.
+          </div>
+        </div>
+
+        <!-- ACCURACY STATS -->
+        <div class="trading-window-card" id="accuracyCard">
+          <div class="tw-header">📊 Signal Accuracy (Auto-Tracked)</div>
+          <div
+            id="accuracyLoading"
+            style="
+              text-align: center;
+              color: #a0a0b5;
+              font-size: 13px;
+              padding: 10px 0;
+            "
+          >
+            Stats load ho rahe hain...
+          </div>
+          <div id="accuracyContent" style="display: none">
+            <div class="result-row">
+              <span class="result-label">Total Resolved Signals</span>
+              <span class="result-val" id="accTotalClosed">--</span>
+            </div>
+            <div class="result-row">
+              <span class="result-label">Wins / Losses</span>
+              <span class="result-val" id="accWinsLosses">--</span>
+            </div>
+            <div
+              class="result-row"
+              style="
+                background: rgba(0, 255, 136, 0.05);
+                border-radius: 5px;
+                padding: 12px 5px;
+              "
+            >
+              <span class="result-label">Overall Win Rate</span>
+              <span class="result-val" id="accWinRate" style="color: #00ff88"
+                >--</span
+              >
+            </div>
+            <div class="table-responsive" style="margin-top: 12px">
+              <table class="tw-table">
+                <thead>
+                  <tr>
+                    <th>Confidence Bucket</th>
+                    <th>Trades</th>
+                    <th>Win Rate</th>
+                  </tr>
+                </thead>
+                <tbody id="accBucketBody"></tbody>
+              </table>
+            </div>
+            <div
+              style="
+                font-size: 11px;
+                color: #888;
+                margin-top: 10px;
+                text-align: center;
+              "
+            >
+              * Sirf resolved (TP ya SL hit) signals shamil hain. OPEN signals
+              count nahi hote jab tak result na aa jaye.
+            </div>
+          </div>
+          <div
+            id="accuracyError"
+            style="
+              display: none;
+              color: #ff4d4d;
+              font-size: 13px;
+              text-align: center;
+              padding: 10px 0;
+            "
+          ></div>
+        </div>
+      </div>
+
+      <!-- PREMIUM MODAL -->
+      <div
+        id="premiumModal"
+        style="
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(11, 15, 25, 0.98);
+          z-index: 99998;
+          justify-content: center;
+          align-items: center;
+          padding: 15px;
+          overflow-y: auto;
+        "
+      >
+        <div
+          style="
+            background: #151a28;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            border: 2px solid #ffcc00;
+            box-shadow: 0 0 40px rgba(255, 204, 0, 0.3);
+            padding: 20px;
+            position: relative;
+            margin: auto;
+          "
+        >
+          <button
+            onclick="closePremiumModal()"
+            style="
+              position: absolute;
+              top: 10px;
+              right: 15px;
+              background: none;
+              border: none;
+              color: #ff4d4d;
+              font-size: 32px;
+              cursor: pointer;
+              font-weight: bold;
+              line-height: 1;
+            "
+          >
+            ×
+          </button>
+          <div style="text-align: center; margin-bottom: 20px">
+            <div style="font-size: 40px; margin-bottom: 5px">⭐</div>
+            <h2 style="color: #ffcc00; font-size: 20px; margin-bottom: 5px">
+              Unlock Premium
+            </h2>
+            <p style="color: #a0a0b5; font-size: 12px">
+              Zyada signals • Higher confidence • Priority AI
+            </p>
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr;
+              gap: 10px;
+              margin-bottom: 15px;
+            "
+          >
+            <div
+              style="
+                background: linear-gradient(
+                  135deg,
+                  rgba(0, 210, 255, 0.05),
+                  transparent
+                );
+                border: 1px solid #00d2ff;
+                border-radius: 10px;
+                padding: 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <div>
+                <div style="color: #00d2ff; font-size: 14px; font-weight: bold">
+                  BASIC
+                </div>
+                <div style="color: #a0a0b5; font-size: 10px">Starter Plan</div>
+              </div>
+              <div style="text-align: right">
+                <div style="color: #00ff88; font-size: 18px; font-weight: bold">
+                  5
+                </div>
+                <div style="color: #666; font-size: 10px">signals/day</div>
+              </div>
+            </div>
+            <div
+              style="
+                background: linear-gradient(
+                  135deg,
+                  rgba(255, 204, 0, 0.08),
+                  transparent
+                );
+                border: 1px solid #ffcc00;
+                border-radius: 10px;
+                padding: 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
+              "
+            >
+              <div
+                style="
+                  position: absolute;
+                  top: -8px;
+                  right: 10px;
+                  background: #ffcc00;
+                  color: #000;
+                  font-size: 9px;
+                  font-weight: bold;
+                  padding: 2px 8px;
+                  border-radius: 10px;
+                "
+              >
+                POPULAR
+              </div>
+              <div>
+                <div style="color: #ffcc00; font-size: 14px; font-weight: bold">
+                  PRO
+                </div>
+                <div style="color: #a0a0b5; font-size: 10px">Most Popular</div>
+              </div>
+              <div style="text-align: right">
+                <div style="color: #00ff88; font-size: 18px; font-weight: bold">
+                  10
+                </div>
+                <div style="color: #666; font-size: 10px">signals/day</div>
+              </div>
+            </div>
+            <div
+              style="
+                background: linear-gradient(
+                  135deg,
+                  rgba(255, 77, 77, 0.05),
+                  transparent
+                );
+                border: 1px solid #ff4d4d;
+                border-radius: 10px;
+                padding: 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <div>
+                <div style="color: #ff4d4d; font-size: 14px; font-weight: bold">
+                  ELITE
+                </div>
+                <div style="color: #a0a0b5; font-size: 10px">Pro Trader</div>
+              </div>
+              <div style="text-align: right">
+                <div style="color: #00ff88; font-size: 18px; font-weight: bold">
+                  20
+                </div>
+                <div style="color: #666; font-size: 10px">signals/day</div>
+              </div>
+            </div>
+          </div>
+          <button
+            onclick="openWhatsApp()"
+            style="
+              width: 100%;
+              background: #25d366;
+              color: #fff;
+              border: none;
+              padding: 14px;
+              border-radius: 10px;
+              font-size: 14px;
+              font-weight: bold;
+              cursor: pointer;
+              margin-bottom: 15px;
+              box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            "
+          >
+            📱 WhatsApp par Contact Karein
+          </button>
+          <div style="text-align: center; margin: 15px 0; position: relative">
+            <div style="border-top: 1px dashed #3b3b54"></div>
+            <span
+              style="
+                position: absolute;
+                top: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #151a28;
+                padding: 0 10px;
+                color: #a0a0b5;
+                font-size: 11px;
+              "
+              >YA</span
+            >
+          </div>
+          <p
+            style="
+              color: #a0a0b5;
+              font-size: 11px;
+              text-align: center;
+              margin-bottom: 8px;
+            "
+          >
+            🔑 Premium Code Redeem Karein
+          </p>
+          <input
+            type="text"
+            id="premiumCodeInput"
+            placeholder="ENTER PREMIUM CODE"
+            autocomplete="off"
+            style="
+              width: 100%;
+              padding: 12px;
+              background: #0b0f19;
+              border: 1px solid #3b3b54;
+              color: #fff;
+              border-radius: 10px;
+              font-size: 14px;
+              margin-bottom: 10px;
+              outline: none;
+              text-transform: uppercase;
+              text-align: center;
+              letter-spacing: 2px;
+              font-weight: bold;
+            "
+          />
+          <button
+            id="redeemCodeBtn"
+            onclick="redeemPremiumCode()"
+            style="
+              width: 100%;
+              background: linear-gradient(90deg, #00d2ff, #007bff);
+              color: #fff;
+              border: none;
+              padding: 14px;
+              border-radius: 10px;
+              font-size: 13px;
+              font-weight: bold;
+              cursor: pointer;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+            "
+          >
+            Redeem Code
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ AD CONTROL SYSTEM (Annoying Ads Fix) ═══════════════ -->
+    <script>
+      (function () {
+        console.log("🎯 Ad Control System initialized");
+
+        var SESSION_KEY = "cw_ad_shown_session";
+        var DAILY_KEY = "cw_ad_shown_daily";
+        var MAX_PER_DAY = 3;
+        var AD_DELAY_MS = 8000;
+
+        function hasShownThisSession() {
+          return sessionStorage.getItem(SESSION_KEY) === "true";
+        }
+
+        function getTodayCount() {
+          var today = new Date().toDateString();
+          var saved = JSON.parse(localStorage.getItem(DAILY_KEY) || "{}");
+          return saved.date === today ? saved.count || 0 : 0;
+        }
+
+        function canShowAd() {
+          if (hasShownThisSession()) {
+            console.log("🚫 Ad blocked: session mein dikh chuki");
+            return false;
+          }
+          if (getTodayCount() >= MAX_PER_DAY) {
+            console.log(
+              "🚫 Ad blocked: aaj ki limit khatam (" +
+                getTodayCount() +
+                "/" +
+                MAX_PER_DAY +
+                ")",
+            );
+            return false;
+          }
+          return true;
+        }
+
+        function markShown() {
+          sessionStorage.setItem(SESSION_KEY, "true");
+          var today = new Date().toDateString();
+          var saved = JSON.parse(localStorage.getItem(DAILY_KEY) || "{}");
+          if (saved.date === today) {
+            saved.count = (saved.count || 0) + 1;
+          } else {
+            saved.date = today;
+            saved.count = 1;
+          }
+          localStorage.setItem(DAILY_KEY, JSON.stringify(saved));
+        }
+
+        function loadAdTag() {
+          if (!canShowAd()) return;
+
+          markShown();
+          console.log(
+            "✅ Ad loading... (today: " +
+              getTodayCount() +
+              "/" +
+              MAX_PER_DAY +
+              ")",
+          );
+
+          var script = document.createElement("script");
+          script.src = "https://quge5.com/88/tag.min.js";
+          script.async = true;
+          script.setAttribute("data-zone", "294042");
+          script.setAttribute("data-cfasync", "false");
+          document.body.appendChild(script);
+        }
+
+        setTimeout(loadAdTag, AD_DELAY_MS);
+      })();
+    </script>
+
+    <!-- Scripts -->
+    <script type="module" src="./scripts/main.js"></script>
+  </body>
+</html>

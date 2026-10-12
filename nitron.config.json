@@ -1,0 +1,16 @@
+{
+  "name": "CryptoWorld",
+  "packageId": "com.cryptoworld.app",
+  "version": "1.0.0",
+  "entry": "dist/index.html",
+  "orientation": "portrait",
+  "statusBar": false,
+  "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"],
+  "icon": "./public/icon-512.png",
+  "webview": {
+    "backButton": "history"
+  },
+  "splashScreen": {
+    "backgroundColor": "#0b0f19"
+  }
+}

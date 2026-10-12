@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <title>Admin Panel — CryptoWorld</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;}
+        body{background:#0b0f19;color:#fff;overflow-x:hidden;}
+        .admin-header{background:#151a28;padding:15px;text-align:center;border-bottom:1px solid #232b3e;position:sticky;top:0;z-index:100;}
+        .admin-header h1{color:#ffcc00;font-size:18px;letter-spacing:1px;}
+        .admin-header p{color:#a0a0b5;font-size:11px;margin-top:3px;}
+        .admin-header a{position:absolute;left:15px;top:20px;color:#00d2ff;text-decoration:none;font-size:20px;}
+        .admin-container{max-width:600px;margin:0 auto;padding:15px;}
+        .admin-card{background:#151a28;border-radius:12px;padding:18px;margin-bottom:15px;border:1px solid #232b3e;}
+        .admin-card h2{color:#00d2ff;font-size:15px;margin-bottom:12px;text-align:center;}
+        .admin-input{width:100%;padding:12px;background:#0b0f19;border:1px solid #3b3b54;color:#fff;border-radius:8px;font-size:14px;margin-bottom:10px;outline:none;}
+        .admin-select{width:100%;padding:12px;background:#0b0f19;border:1px solid #3b3b54;color:#fff;border-radius:8px;font-size:14px;margin-bottom:10px;outline:none;appearance:none;-webkit-appearance:none;}
+        .admin-btn{width:100%;padding:14px;border:none;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:.3s;}
+        .admin-btn:active{transform:scale(.98);}
+        .admin-btn:disabled{opacity:.5;cursor:not-allowed;}
+        .btn-gold{background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;}
+        .btn-blue{background:linear-gradient(90deg,#00d2ff,#007bff);color:#fff;}
+        .btn-green{background:#25D366;color:#fff;}
+        .btn-red{background:#ff4d4d;color:#fff;}
+        .admin-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;}
+        .stat-box{background:#0b0f19;border:1px solid #232b3e;border-radius:8px;padding:10px;text-align:center;}
+        .stat-box .num{color:#00ff88;font-size:20px;font-weight:bold;}
+        .stat-box .lbl{color:#a0a0b5;font-size:10px;margin-top:3px;}
+        .code-group{margin-bottom:15px;border:1px solid #232b3e;border-radius:8px;overflow:hidden;}
+        .code-group-header{background:rgba(0,210,255,.08);padding:8px 12px;color:#00d2ff;font-size:12px;font-weight:bold;display:flex;justify-content:space-between;}
+        .code-list{max-height:300px;overflow-y:auto;}
+        .code-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid #1a1f2e;font-size:12px;}
+        .code-item:last-child{border-bottom:none;}
+        .code-item.used{opacity:.5;}
+        .code-value{font-family:'Courier New',monospace;color:#ffcc00;font-weight:bold;letter-spacing:1px;}
+        .code-value.used-val{color:#666;text-decoration:line-through;}
+        .code-status{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:bold;}
+        .status-unused{background:rgba(0,255,136,.15);color:#00ff88;}
+        .status-used{background:rgba(255,77,77,.15);color:#ff4d4d;}
+        .copy-btn{background:rgba(0,210,255,.15);color:#00d2ff;border:1px solid #00d2ff;padding:3px 8px;border-radius:4px;font-size:10px;cursor:pointer;margin-left:5px;}
+        .loading{text-align:center;color:#00d2ff;padding:15px;font-size:13px;}
+        .error-msg{color:#ff4d4d;text-align:center;font-size:12px;padding:10px;}
+        .success-msg{color:#00ff88;text-align:center;font-size:12px;padding:10px;}
+        .single-code-result{background:linear-gradient(135deg,rgba(255,204,0,.15),rgba(255,204,0,.05));border:2px solid #ffcc00;border-radius:10px;padding:15px;margin-top:10px;text-align:center;display:none;}
+        .single-code-result .big-code{color:#ffcc00;font-size:20px;font-weight:bold;font-family:'Courier New',monospace;letter-spacing:2px;margin:8px 0;word-break:break-all;}
+        .single-code-result .info{color:#a0a0b5;font-size:11px;}
+    </style>
+</head>
+<body>
+
+    <div class="admin-header">
+        <a href="../index.html">←</a>
+        <h1>🔐 Admin Panel</h1>
+        <p>CryptoWorld Premium Management</p>
+    </div>
+
+    <div class="admin-container">
+
+        <!-- ADMIN KEY INPUT -->
+        <div class="admin-card">
+            <h2>🔑 Admin Login</h2>
+            <input type="password" id="adminKeyInput" class="admin-input" placeholder="Enter Admin Key" autocomplete="off">
+            <button class="admin-btn btn-blue" onclick="saveAdminKey()">Save Key</button>
+            <div id="adminKeyStatus" style="text-align:center;font-size:11px;color:#a0a0b5;margin-top:10px;">
+                Key save karein
+            </div>
+        </div>
+
+        <!-- BULK GENERATE -->
+        <div class="admin-card">
+            <h2>⚡ Bulk Generate (20 × 3 Plans)</h2>
+            <p style="color:#a0a0b5;font-size:11px;text-align:center;margin-bottom:12px;">
+                1 click mein 60 codes banayein (BASIC + PRO + ELITE, har ek ke 20)
+            </p>
+            <button id="bulkGenBtn" class="admin-btn btn-gold" onclick="bulkGenerate()">⭐ Generate 60 Codes</button>
+        </div>
+
+        <!-- SINGLE CODE GENERATE -->
+        <div class="admin-card">
+            <h2>🎯 Single Code (Customer ke liye)</h2>
+            <select id="singlePlanSelect" class="admin-select">
+                <option value="BASIC">BASIC (5 signals/day)</option>
+                <option value="PRO" selected>PRO (10 signals/day)</option>
+                <option value="ELITE">ELITE (20 signals/day)</option>
+            </select>
+            <select id="singleDurationSelect" class="admin-select">
+                <option value="7">7 Days</option>
+                <option value="15">15 Days</option>
+                <option value="30" selected>30 Days</option>
+            </select>
+            <button id="singleGenBtn" class="admin-btn btn-green" onclick="generateSingle()">📱 Generate 1 Code</button>
+
+            <div class="single-code-result" id="singleCodeResult">
+                <div class="info">Customer ko yeh code bhejein:</div>
+                <div class="big-code" id="singleCodeValue">--</div>
+                <div class="info" id="singleCodeInfo">--</div>
+                <button class="copy-btn" style="margin-top:10px;padding:8px 15px;font-size:12px;" onclick="copySingleCode()">📋 Copy Code</button>
+            </div>
+        </div>
+
+        <!-- ALL CODES -->
+        <div class="admin-card">
+            <h2>📋 All Codes</h2>
+            <div class="admin-stats">
+                <div class="stat-box">
+                    <div class="num" id="statTotal">0</div>
+                    <div class="lbl">Total</div>
+                </div>
+                <div class="stat-box">
+                    <div class="num" id="statUnused" style="color:#00ff88;">0</div>
+                    <div class="lbl">Unused</div>
+                </div>
+                <div class="stat-box">
+                    <div class="num" id="statUsed" style="color:#ff4d4d;">0</div>
+                    <div class="lbl">Used</div>
+                </div>
+            </div>
+            <button class="admin-btn btn-blue" onclick="loadAllCodes()" style="margin-bottom:12px;">🔄 Refresh List</button>
+            <div id="codesContainer">
+                <div class="loading">Codes load karne ke liye Refresh dabayein</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    const ADMIN_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzxKNv2JGtgAbLohzkvTwN5it7Xl3iKSKb6RK228k7JQxUnl-OPPKaXrjq5v-eaj9XrPQ/exec";
+
+    let adminKey = localStorage.getItem("cw_admin_key") || "";
+
+    function saveAdminKey() {
+        const key = document.getElementById("adminKeyInput").value.trim();
+        if (!key) {
+            alert("Admin key darj karein.");
+            return;
+        }
+        adminKey = key;
+        localStorage.setItem("cw_admin_key", key);
+        document.getElementById("adminKeyStatus").innerHTML = "✅ Key saved — ab aap codes generate kar sakte hain";
+        document.getElementById("adminKeyStatus").style.color = "#00ff88";
+        loadAllCodes();
+    }
+
+    if (adminKey) {
+        document.getElementById("adminKeyInput").value = adminKey;
+        document.getElementById("adminKeyStatus").innerHTML = "✅ Key loaded — ab aap codes generate kar sakte hain";
+        document.getElementById("adminKeyStatus").style.color = "#00ff88";
+    }
+
+    async function bulkGenerate() {
+        if (!adminKey) {
+            alert("Pehle admin key save karein.");
+            return;
+        }
+        if (!confirm("60 codes banayenge (20 × BASIC, PRO, ELITE).\n\nYeh process 20-30 second lega. Continue?")) {
+            return;
+        }
+        const btn = document.getElementById("bulkGenBtn");
+        btn.disabled = true;
+        btn.innerText = "⏳ Generating... (please wait)";
+        try {
+            const res = await fetch(ADMIN_SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "admin_bulk_generate", adminKey: adminKey })
+            });
+            const data = await res.json();
+            if (data.error) {
+                alert("❌ " + data.message);
+                return;
+            }
+            const msg = "🎉 " + data.message + "\n\n" +
+                        "BASIC: " + data.codes.BASIC.length + " codes\n" +
+                        "PRO: " + data.codes.PRO.length + " codes\n" +
+                        "ELITE: " + data.codes.ELITE.length + " codes";
+            alert(msg);
+            loadAllCodes();
+        } catch (e) {
+            alert("❌ Error: " + e.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerText = "⭐ Generate 60 Codes";
+        }
+    }
+
+    async function generateSingle() {
+        if (!adminKey) {
+            alert("Pehle admin key save karein.");
+            return;
+        }
+        const planType = document.getElementById("singlePlanSelect").value;
+        const durationDays = Number(document.getElementById("singleDurationSelect").value);
+        const btn = document.getElementById("singleGenBtn");
+        btn.disabled = true;
+        btn.innerText = "⏳ Generating...";
+        try {
+            const res = await fetch(ADMIN_SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({
+                    action: "admin_generate_single",
+                    adminKey: adminKey,
+                    planType: planType,
+                    durationDays: durationDays
+                })
+            });
+            const data = await res.json();
+            if (data.error) {
+                alert("❌ " + data.message);
+                return;
+            }
+            document.getElementById("singleCodeValue").innerText = data.code;
+            document.getElementById("singleCodeInfo").innerText =
+                data.planType + " • " + data.durationDays + " days • " + data.signalsPerDay + " signals/day";
+            document.getElementById("singleCodeResult").style.display = "block";
+            loadAllCodes();
+        } catch (e) {
+            alert("❌ Error: " + e.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerText = "📱 Generate 1 Code";
+        }
+    }
+
+    function copySingleCode() {
+        const code = document.getElementById("singleCodeValue").innerText.trim();
+        if (!code || code === "--") return;
+        navigator.clipboard.writeText(code).then(function() {
+            alert("✅ Code copy ho gaya: " + code);
+        }).catch(function() {
+            prompt("Copy karein:", code);
+        });
+    }
+
+    async function loadAllCodes() {
+        if (!adminKey) {
+            document.getElementById("codesContainer").innerHTML =
+                '<div class="error-msg">Pehle admin key save karein</div>';
+            return;
+        }
+        const container = document.getElementById("codesContainer");
+        container.innerHTML = '<div class="loading">⏳ Codes load ho rahe hain...</div>';
+        try {
+            const res = await fetch(ADMIN_SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "admin_list_codes", adminKey: adminKey })
+            });
+            const data = await res.json();
+            if (data.error) {
+                container.innerHTML = '<div class="error-msg">❌ ' + data.message + '</div>';
+                return;
+            }
+            document.getElementById("statTotal").innerText = data.stats.total;
+            document.getElementById("statUnused").innerText = data.stats.unused;
+            document.getElementById("statUsed").innerText = data.stats.used;
+
+            if (data.codes.length === 0) {
+                container.innerHTML = '<div class="loading">Koi code nahi — "Generate 60 Codes" dabayein</div>';
+                return;
+            }
+
+            const grouped = { BASIC: [], PRO: [], ELITE: [] };
+            data.codes.forEach(function(c) {
+                const plan = String(c.planType || "").toUpperCase();
+                if (grouped[plan]) grouped[plan].push(c);
+            });
+
+            let html = "";
+            ["BASIC", "PRO", "ELITE"].forEach(function(plan) {
+                const arr = grouped[plan];
+                if (arr.length === 0) return;
+                const unusedCount = arr.filter(function(c) { return c.status === "UNUSED"; }).length;
+                html += '<div class="code-group">';
+                html += '<div class="code-group-header">';
+                html += '<span>' + plan + '</span>';
+                html += '<span>' + unusedCount + '/' + arr.length + ' available</span>';
+                html += '</div>';
+                html += '<div class="code-list">';
+                arr.forEach(function(c) {
+                    const isUsed = c.status === "USED";
+                    html += '<div class="code-item' + (isUsed ? ' used' : '') + '">';
+                    html += '<div>';
+                    html += '<span class="code-value' + (isUsed ? ' used-val' : '') + '">' + c.code + '</span>';
+                    if (!isUsed) {
+                        html += '<button class="copy-btn" onclick="copyCode(\'' + c.code + '\')">Copy</button>';
+                    }
+                    html += '</div>';
+                    html += '<span class="code-status ' + (isUsed ? 'status-used' : 'status-unused') + '">' + c.status + '</span>';
+                    html += '</div>';
+                });
+                html += '</div></div>';
+            });
+            container.innerHTML = html;
+        } catch (e) {
+            container.innerHTML = '<div class="error-msg">❌ Load error: ' + e.message + '</div>';
+        }
+    }
+
+    function copyCode(code) {
+        navigator.clipboard.writeText(code).then(function() {
+            alert("✅ Copy: " + code);
+        }).catch(function() {
+            prompt("Copy karein:", code);
+        });
+    }
+
+    window.addEventListener("DOMContentLoaded", function() {
+        if (adminKey) {
+            loadAllCodes();
+        }
+    });
+    </script>
+
+</body>
+</html>

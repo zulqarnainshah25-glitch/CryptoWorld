@@ -1,0 +1,660 @@
+/* =========================================================
+   RESET & BASE
+========================================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0b0f19;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: #151a28;
+    box-shadow: 0 4px 10px rgba(0,0,0,.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    z-index: 1000;
+    border-bottom: 1px solid #232b3e;
+}
+
+.menu-icon {
+    font-size: 24px;
+    color: #00d2ff;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px;
+}
+
+.app-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+/* =========================================================
+   LOGIN MODAL
+========================================================= */
+#loginModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(11,15,25,.98);
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-card {
+    background: #151a28;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 380px;
+    border: 1px solid #232b3e;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,.5);
+}
+
+.login-input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    background: #0b0f19;
+    border: 1px solid #3b3b54;
+    color: #fff;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg,#00d2ff,#007bff);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.login-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+.sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: -320px !important;
+    width: 260px !important;
+    height: 100% !important;
+    background: #151a28 !important;
+    box-shadow: 4px 0 20px rgba(0,0,0,.8) !important;
+    z-index: 99999 !important;
+    transition: left .3s ease-in-out !important;
+    display: flex !important;
+    flex-direction: column !important;
+    border-right: 1px solid #232b3e !important;
+}
+
+.sidebar.active {
+    left: 0 !important;
+}
+
+.sidebar-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0,0,0,.7) !important;
+    z-index: 99998 !important;
+    display: none;
+    opacity: 0;
+    transition: .3s;
+}
+
+.sidebar-overlay.active {
+    display: block !important;
+    opacity: 1 !important;
+}
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+.main-container {
+    margin-top: 75px;
+    padding: 10px 15px 80px;
+}
+
+.crypto-dashboard {
+    background: #151a28;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.2);
+    border: 1px solid #232b3e;
+}
+
+/* =========================================================
+   USER PANEL
+========================================================= */
+.user-panel {
+    background: rgba(0,210,255,.05);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px dashed #00d2ff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-panel p {
+    margin: 5px 0;
+    font-size: 13px;
+    color: #a0a0b5;
+}
+
+.user-panel span.highlight {
+    color: #00ff88;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.crypto-select {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #3b3b54;
+    background: #0b0f19;
+    color: #fff;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.crypto-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(90deg,#00d2ff,#007bff);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 4px 15px rgba(0,210,255,.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.crypto-btn:active {
+    transform: scale(.98);
+}
+
+.crypto-btn:disabled {
+    background: #3b3b54;
+    box-shadow: none;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
+.loader-container {
+    display: none;
+    text-align: center;
+    padding: 25px 0;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #232b3e;
+    border-top: 4px solid #00d2ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+.dynamic-loading-text {
+    color: #00d2ff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* =========================================================
+   RESULT CARD
+========================================================= */
+.result-card {
+    background: #0b0f19;
+    padding: 15px;
+    border-radius: 10px;
+    display: none;
+    border: 1px solid #3b3b54;
+    margin-top: 15px;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #232b3e;
+    font-size: 14px;
+    gap: 15px;
+}
+
+.result-row:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    color: #a0a0b5;
+}
+
+.result-val {
+    font-weight: bold;
+    font-size: 15px;
+    text-align: right;
+}
+
+.dir-long {
+    color: #00ff88;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.dir-short {
+    color: #ff4d4d;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.dir-notrade {
+    color: #ffcc00;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.time-badge {
+    background: #232b3e;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #00d2ff;
+}
+
+.warning-box {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    background: rgba(255,204,0,.1);
+    border: 1px solid rgba(255,204,0,.4);
+    color: #ffcc00;
+    display: none;
+}
+
+.reason-box {
+    display: block;
+    width: 100%;
+    color: #a0a0b5;
+    font-size: 13px;
+    line-height: 1.6;
+    padding-top: 10px;
+}
+
+.error-detail {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* =========================================================
+   WHATSAPP FAB
+========================================================= */
+.fab-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(37,211,102,.4);
+    z-index: 1000;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.fab-whatsapp:active {
+    transform: scale(.9);
+}
+
+.fab-whatsapp svg {
+    width: 35px;
+    height: 35px;
+    fill: #fff;
+}
+
+/* =========================================================
+   TRADING WINDOW CARD
+========================================================= */
+.trading-window-card {
+    background: #151a28;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 1px solid #232b3e;
+}
+
+.tw-header {
+    color: #00d2ff;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #232b3e;
+}
+
+.tw-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    min-width: 350px;
+}
+
+.tw-table th, .tw-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #232b3e;
+    white-space: nowrap;
+}
+
+.tw-table th {
+    color: #a0a0b5;
+    font-weight: normal;
+    background: rgba(0, 210, 255, 0.05);
+    font-size: 13px;
+}
+
+.tw-table tr:last-child td {
+    border-bottom: none;
+}
+
+.tw-table td.pair-col {
+    font-weight: bold;
+    color: #fff;
+}
+
+.tw-table td.time-col {
+    color: #00ff88;
+}
+
+/* =========================================================
+   LIVE CHART SECTION
+========================================================= */
+.live-chart-section {
+    background: #0b0f19;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #232b3e;
+}
+
+.chart-mini-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #232b3e;
+}
+
+.chart-title {
+    color: #00d2ff;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.fullscreen-mini-btn {
+    background: rgba(0, 210, 255, 0.1);
+    color: #00d2ff;
+    border: 1px solid #00d2ff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.fullscreen-mini-btn:active {
+    background: rgba(0, 210, 255, 0.3);
+}
+
+.chart-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #232b3e;
+    margin-bottom: 8px;
+}
+
+.chart-label {
+    color: #a0a0b5;
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.chart-price-value {
+    color: #00ff88;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}
+
+.chart-price-change {
+    color: #00ff88;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.chart-price-change.up { color: #00ff88; }
+.chart-price-change.down { color: #ff4d4d; }
+
+.chart-indicators {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.chart-ind-box {
+    background: #151a28;
+    border: 1px solid #232b3e;
+    border-radius: 6px;
+    padding: 6px;
+    text-align: center;
+}
+
+.chart-ind-value {
+    color: #00d2ff;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}
+
+.chart-ind-value.positive { color: #00ff88; }
+.chart-ind-value.negative { color: #ff4d4d; }
+
+.chart-wrap {
+    background: #151a28;
+    border: 1px solid #232b3e;
+    border-radius: 8px;
+    padding: 4px;
+    position: relative;
+}
+
+#mainChartContainer {
+    width: 100%;
+    height: 250px;
+    border-radius: 6px;
+}
+
+#mainVolumeContainer {
+    width: 100%;
+    height: 60px;
+    margin-top: 2px;
+    border-radius: 6px;
+}
+
+.chart-loading-mini {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #00d2ff;
+    font-size: 12px;
+    z-index: 10;
+}
+
+.chart-info-mini {
+    color: #a0a0b5;
+    font-size: 10px;
+    text-align: center;
+    margin-top: 6px;
+    min-height: 15px;
+}
+
+/* Fullscreen mode */
+.chart-fullscreen-mode {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 99999 !important;
+    background: #0b0f19 !important;
+    padding: 12px !important;
+    overflow-y: auto !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+}
+
+.chart-fullscreen-mode #mainChartContainer {
+    height: 60vh !important;
+}
+
+.chart-fullscreen-mode #mainVolumeContainer {
+    height: 12vh !important;
+}
+
+/* =========================================================
+   WAIT FOR BOX
+========================================================= */
+.waitfor-box {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(0, 210, 255, 0.06);
+    border: 1px dashed #00d2ff;
+    font-size: 13px;
+    line-height: 1.6;
+    display: none;
+}
+
+.waitfor-title {
+    color: #00d2ff;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.waitfor-line {
+    color: #d0d0e0;
+    padding: 3px 0;
+}
+
+.waitfor-note {
+    color: #888;
+    font-size: 11px;
+    margin-top: 8px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 480px) {
+    .crypto-dashboard {
+        padding: 15px;
+    }
+
+    .result-row {
+        font-size: 13px;
+    }
+
+    .result-val {
+        font-size: 14px;
+    }
+
+    #mainChartContainer { height: 220px; }
+    .chart-price-value { font-size: 16px; }
+}
